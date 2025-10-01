@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlzaTestProject", "AlzaTestProject\AlzaTestProject.csproj", "{B348EBF4-851C-4E7B-9B50-536F8232904D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlzaTestProject.Domain", "AlzaTestProject.Domain\AlzaTestProject.Domain.csproj", "{B1E3FE68-1D44-499B-BBB8-FC1549A3D088}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B348EBF4-851C-4E7B-9B50-536F8232904D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B348EBF4-851C-4E7B-9B50-536F8232904D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B348EBF4-851C-4E7B-9B50-536F8232904D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B348EBF4-851C-4E7B-9B50-536F8232904D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1E3FE68-1D44-499B-BBB8-FC1549A3D088}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1E3FE68-1D44-499B-BBB8-FC1549A3D088}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1E3FE68-1D44-499B-BBB8-FC1549A3D088}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1E3FE68-1D44-499B-BBB8-FC1549A3D088}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B76D93C9-5C18-406B-82C8-B8EA3BCAC738}
+	EndGlobalSection
+EndGlobal
