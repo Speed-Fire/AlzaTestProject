@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\AlzaTestProject.Domain\AlzaTestProject.Domain.csproj" />
   </ItemGroup>
 
 </Project>
