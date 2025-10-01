@@ -1,4 +1,4 @@
-﻿namespace AlzaTestProject.Dtos
+﻿namespace AlzaTestProject.Services.Dtos
 {
 	public class ProductDto
 	{
