@@ -16,12 +16,14 @@ namespace AlzaTestProject.Services
 {
 	public class ProductService : IProductService
 	{
+		private readonly IUnitOfWork _uow;
 		private readonly IRepository<Product> _productsRepository;
 		private readonly IProductSpecificationFactory _productSpecificationFactory;
 
-		public ProductService(IRepository<Product> productsRepository, IProductSpecificationFactory productSpecificationFactory)
+		public ProductService(IUnitOfWork uow, IProductSpecificationFactory productSpecificationFactory)
 		{
-			_productsRepository = productsRepository;
+			_uow = uow;
+			_productsRepository = uow.GetRepository<Product>();
 			_productSpecificationFactory = productSpecificationFactory;
 		}
 
@@ -47,7 +49,9 @@ namespace AlzaTestProject.Services
 					return new Error<string>("Product with the same name already exists.");
 
 				var product = new Product(createProductDto.Name, createProductDto.ImageUrl);
-				product = await _productsRepository.Create(product);
+				product = _productsRepository.Create(product);
+
+				await _uow.SaveChangesAsync();
 
 				return product.MapToDto();
 			}
@@ -67,6 +71,8 @@ namespace AlzaTestProject.Services
 
 				product.UpdateStock(updateStockDto.NewStock);
 				product = await _productsRepository.Update(product);
+
+				await _uow.SaveChangesAsync();
 
 				return product.MapToDto();
 			}
