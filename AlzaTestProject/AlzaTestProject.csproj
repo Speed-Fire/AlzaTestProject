@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AlzaTestProject.Domain\AlzaTestProject.Domain.csproj" />
+    <ProjectReference Include="..\AlzaTestProject.Services\AlzaTestProject.Services.csproj" />
   </ItemGroup>
 
 </Project>
