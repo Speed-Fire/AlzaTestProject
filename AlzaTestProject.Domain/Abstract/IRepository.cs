@@ -12,6 +12,7 @@ namespace AlzaTestProject.Domain.Abstract
 		Task<IEnumerable<T>> GetAll();
 		Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> predicate);
 		Task<T> GetById(int id);
+		Task<bool> Exists(Expression<Func<T, bool>> predicate);
 
 		Task<T> Create(T item);
 		Task<bool> Update(T item);
