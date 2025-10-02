@@ -11,11 +11,11 @@ namespace AlzaTestProject.Domain.Abstract
 	{
 		Task<IEnumerable<T>> GetAll();
 		Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> predicate);
-		Task<T> GetById(int id);
+		Task<T?> GetById(int id);
 		Task<bool> Exists(Expression<Func<T, bool>> predicate);
 
 		Task<T> Create(T item);
-		Task<bool> Update(T item);
-		Task<bool> Delete(T item);
+		Task<T> Update(T item);
+		Task Delete(T item);
 	}
 }
