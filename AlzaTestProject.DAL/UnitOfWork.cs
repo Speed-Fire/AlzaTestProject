@@ -3,6 +3,7 @@ using AlzaTestProject.Domain.Abstract;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace AlzaTestProject.DAL
 	public sealed class UnitOfWork : IUnitOfWork
 	{
 		private readonly AppDbContext _dbContext;
-		private readonly Dictionary<Type, object> _repositories = [];
+		private readonly ConcurrentDictionary<Type, object> _repositories = [];
 		private readonly IServiceProvider _serviceProvider;
 
 		private IDbContextTransaction? _transaction;
@@ -28,13 +29,8 @@ namespace AlzaTestProject.DAL
 		{
 			var type = typeof(TModel);
 
-			if(_repositories.TryGetValue(type, out var repository))
-			{
-				return (IRepository<TModel>)repository;
-			}
-
-			repository = _serviceProvider.GetRequiredService<IRepository<TModel>>();
-			_repositories[type] = repository;
+			var repository = _repositories.GetOrAdd(type, t =>
+				_serviceProvider.GetRequiredService<IRepository<TModel>>());
 
 			return (IRepository<TModel>)repository;
 		}
