@@ -63,11 +63,10 @@ namespace AlzaTestProject.DAL.Repositories
 			throw new InvalidOperationException("Wrong type of specification.");
 		}
 
-		public async Task<Product> Create(Product item)
+		public Product Create(Product item)
 		{
 			var entity = item.MapToDal();
 			_dbContext.Products.Add(entity);
-			await _dbContext.SaveChangesAsync();
 
 			return entity.MapToDom();
 		}
@@ -80,16 +79,13 @@ namespace AlzaTestProject.DAL.Repositories
 				throw new KeyNotFoundException(item.Id.ToString());
 
 			item.MapToDal(entity);
-			
-			await _dbContext.SaveChangesAsync();
 
 			return entity.MapToDom();
 		}
 
-		public async Task Delete(Product item)
+		public void Delete(Product item)
 		{
 			_dbContext.Products.Remove(item.MapToDal());
-			await _dbContext.SaveChangesAsync();
 		}
 	}
 }

@@ -14,8 +14,8 @@ namespace AlzaTestProject.Domain.Abstract
 		Task<T?> GetById(int id);
 		Task<bool> Exists(ISpecification specification);
 
-		Task<T> Create(T item);
+		T Create(T item);
 		Task<T> Update(T item);
-		Task Delete(T item);
+		void Delete(T item);
 	}
 }
