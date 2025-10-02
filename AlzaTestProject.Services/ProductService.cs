@@ -27,21 +27,23 @@ namespace AlzaTestProject.Services
 			_productSpecificationFactory = productSpecificationFactory;
 		}
 
-		public async Task<IEnumerable<ProductDto>> GetAllAsync()
+		public async Task<IEnumerable<ProductDto>> GetAllAsync(CancellationToken cancellationToken = default)
 		{
 			return (await _productsRepository.GetAll()).Select(p => p.MapToDto());
 		}
 
-		public async Task<OneOf<ProductDto, NotFound>> GetByIdAsync(int id)
+		public async Task<OneOf<ProductDto, NotFound>> GetByIdAsync(int id,
+			CancellationToken cancellationToken = default)
 		{
-			var product = await _productsRepository.GetById(id);
+			var product = await _productsRepository.GetById(id, cancellationToken);
 			if (product is null)
 				return new NotFound();
 
 			return product.MapToDto();
 		}
 
-		public async Task<OneOf<ProductDto, Error<string>>> CreateAsync(CreateProductDto createProductDto)
+		public async Task<OneOf<ProductDto, Error<string>>> CreateAsync(CreateProductDto createProductDto,
+			CancellationToken cancellationToken = default)
 		{
 			try
 			{
@@ -51,7 +53,7 @@ namespace AlzaTestProject.Services
 				var product = new Product(createProductDto.Name, createProductDto.ImageUrl);
 				product = _productsRepository.Add(product);
 
-				await _uow.SaveChangesAsync();
+				await _uow.SaveChangesAsync(cancellationToken);
 
 				return product.MapToDto();
 			}
@@ -61,7 +63,8 @@ namespace AlzaTestProject.Services
 			}
 		}
 
-		public async Task<OneOf<ProductDto, NotFound, Error<string>>> UpdateStockAsync(int id, UpdateStockDto updateStockDto)
+		public async Task<OneOf<ProductDto, NotFound, Error<string>>> UpdateStockAsync(int id, UpdateStockDto updateStockDto,
+			CancellationToken cancellationToken = default)
 		{
 			try
 			{
@@ -70,9 +73,9 @@ namespace AlzaTestProject.Services
 					return new NotFound();
 
 				product.UpdateStock(updateStockDto.NewStock);
-				product = await _productsRepository.Update(product);
+				product = await _productsRepository.Update(product, cancellationToken);
 
-				await _uow.SaveChangesAsync();
+				await _uow.SaveChangesAsync(cancellationToken);
 
 				return product.MapToDto();
 			}

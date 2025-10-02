@@ -23,20 +23,21 @@ namespace AlzaTestProject.DAL.Repositories
 			_dbContext = dbContext;
 		}
 
-		public async Task<IEnumerable<Product>> GetAll()
+		public async Task<IEnumerable<Product>> GetAll(CancellationToken cancellationToken = default)
 		{
 			return (await _dbContext.Products.AsNoTracking()
-				.ToListAsync()).Select(p => p.MapToDom());
+				.ToListAsync(cancellationToken)).Select(p => p.MapToDom());
 		}
 
-		public async Task<IEnumerable<Product>> GetAll(ISpecification specification)
+		public async Task<IEnumerable<Product>> GetAll(ISpecification specification,
+			CancellationToken cancellationToken = default)
 		{
 			if (specification is IOrmSpecification<ProductEntity> ormSpec)
 			{
 				var products = await _dbContext.Products
 					.Where(ormSpec.Criteria)
 					.AsNoTracking()
-					.ToListAsync();
+					.ToListAsync(cancellationToken);
 
 				return products.Select(p => p.MapToDom());
 			}
@@ -44,20 +45,21 @@ namespace AlzaTestProject.DAL.Repositories
 			throw new InvalidOperationException("Wrong type of specification.");
 		}
 
-		public async Task<Product?> GetById(int id)
+		public async Task<Product?> GetById(int id, CancellationToken cancellationToken = default)
 		{
-			var entity = await _dbContext.Products.FindAsync(id);
+			var entity = await _dbContext.Products.FindAsync([id], cancellationToken);
 			if (entity is null)
 				return null;
 
 			return entity.MapToDom();
 		}
 
-		public async Task<bool> Exists(ISpecification specification)
+		public async Task<bool> Exists(ISpecification specification,
+			CancellationToken cancellationToken = default)
 		{
 			if (specification is IOrmSpecification<ProductEntity> ormSpec)
 			{
-				return await _dbContext.Products.AnyAsync(ormSpec.Criteria);
+				return await _dbContext.Products.AnyAsync(ormSpec.Criteria, cancellationToken);
 			}
 
 			throw new InvalidOperationException("Wrong type of specification.");
@@ -71,9 +73,9 @@ namespace AlzaTestProject.DAL.Repositories
 			return entity.MapToDom();
 		}
 
-		public async Task<Product> Update(Product item)
+		public async Task<Product> Update(Product item, CancellationToken cancellationToken = default)
 		{
-			var entity = await _dbContext.Products.FindAsync(item.Id);
+			var entity = await _dbContext.Products.FindAsync([item.Id], cancellationToken);
 
 			if(entity is null)
 				throw new KeyNotFoundException(item.Id.ToString());

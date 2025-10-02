@@ -7,9 +7,9 @@ namespace AlzaTestProject.Services.Abstract
 {
 	public interface IProductService
 	{
-		Task<OneOf<ProductDto, Error<string>>> CreateAsync(CreateProductDto createProductDto);
-		Task<IEnumerable<ProductDto>> GetAllAsync();
-		Task<OneOf<ProductDto, NotFound>> GetByIdAsync(int id);
-		Task<OneOf<ProductDto, NotFound, Error<string>>> UpdateStockAsync(int id, UpdateStockDto updateStockDto);
+		Task<OneOf<ProductDto, Error<string>>> CreateAsync(CreateProductDto createProductDto, CancellationToken cancellationToken = default);
+		Task<IEnumerable<ProductDto>> GetAllAsync(CancellationToken cancellationToken = default);
+		Task<OneOf<ProductDto, NotFound>> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+		Task<OneOf<ProductDto, NotFound, Error<string>>> UpdateStockAsync(int id, UpdateStockDto updateStockDto, CancellationToken cancellationToken = default);
 	}
 }
