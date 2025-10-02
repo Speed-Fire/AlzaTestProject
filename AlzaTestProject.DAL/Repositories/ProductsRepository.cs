@@ -63,7 +63,7 @@ namespace AlzaTestProject.DAL.Repositories
 			throw new InvalidOperationException("Wrong type of specification.");
 		}
 
-		public Product Create(Product item)
+		public Product Add(Product item)
 		{
 			var entity = item.MapToDal();
 			_dbContext.Products.Add(entity);

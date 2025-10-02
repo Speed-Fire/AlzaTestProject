@@ -49,7 +49,7 @@ namespace AlzaTestProject.Services
 					return new Error<string>("Product with the same name already exists.");
 
 				var product = new Product(createProductDto.Name, createProductDto.ImageUrl);
-				product = _productsRepository.Create(product);
+				product = _productsRepository.Add(product);
 
 				await _uow.SaveChangesAsync();
 
