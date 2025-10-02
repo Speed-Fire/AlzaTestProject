@@ -10,9 +10,9 @@ namespace AlzaTestProject.Domain.Abstract
 	public interface IRepository<T>
 	{
 		Task<IEnumerable<T>> GetAll();
-		Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> predicate);
+		Task<IEnumerable<T>> GetAll(ISpecification specification);
 		Task<T?> GetById(int id);
-		Task<bool> Exists(Expression<Func<T, bool>> predicate);
+		Task<bool> Exists(ISpecification specification);
 
 		Task<T> Create(T item);
 		Task<T> Update(T item);
