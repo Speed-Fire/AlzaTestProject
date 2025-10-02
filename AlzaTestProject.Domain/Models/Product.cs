@@ -17,16 +17,20 @@ namespace AlzaTestProject.Domain.Models
 
 		public Product(string name, string imageUrl)
 		{
+			if(string.IsNullOrWhiteSpace(name))
+				throw new ArgumentNullException("Name cannot be null or whitespace.");
+
 			Name = name;
 			ImageUrl = new(imageUrl);
 		}
 
 		public Product(int id, string name, string? description, string imageUrl, decimal price, int stock)
+			:
+			this(name, imageUrl)
 		{
 			Id = id;
-			Name = name;
 			Description = description;
-			ImageUrl = new(imageUrl);
+
 			UpdatePrice(price);
 			UpdateStock(stock);
 		}
