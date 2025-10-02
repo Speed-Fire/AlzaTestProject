@@ -17,10 +17,12 @@ namespace AlzaTestProject.Services
 	public class ProductService : IProductService
 	{
 		private readonly IRepository<Product> _productsRepository;
+		private readonly IProductSpecificationFactory _productSpecificationFactory;
 
-		public ProductService(IRepository<Product> productsRepository)
+		public ProductService(IRepository<Product> productsRepository, IProductSpecificationFactory productSpecificationFactory)
 		{
 			_productsRepository = productsRepository;
+			_productSpecificationFactory = productSpecificationFactory;
 		}
 
 		public async Task<IEnumerable<ProductDto>> GetAllAsync()
@@ -41,7 +43,7 @@ namespace AlzaTestProject.Services
 		{
 			try
 			{
-				if (await _productsRepository.Exists(p => p.Name == createProductDto.Name))
+				if (await _productsRepository.Exists(_productSpecificationFactory.ExistsByNameSpecification(createProductDto.Name)))
 					return new Error<string>("Product with the same name already exists.");
 
 				var product = new Product(createProductDto.Name, createProductDto.ImageUrl);
