@@ -3,7 +3,7 @@ using AlzaTestProject.Services.Dtos;
 
 namespace AlzaTestProject.Services.Extensions
 {
-	public static class ModelExtensions
+	public static class ModelMappingExtensions
 	{
 		public static ProductDto MapToDto(this Product product)
 		{
