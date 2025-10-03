@@ -18,6 +18,22 @@ namespace AlzaTestProject.Controllers
 			_productService = productService;
 		}
 
+		/// <summary>
+		/// Retrieves a paginated list of products.
+		/// </summary>
+		/// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+		/// <param name="pageNum">
+		/// The page number to retrieve. Defaults to 1 if not specified.
+		/// Must be a positive integer.
+		/// </param>
+		/// <param name="pageSize">
+		/// The number of products per page. Defaults to 10 if not specified.
+		/// Must be a positive integer.
+		/// </param>
+		/// <returns>
+		/// A <see cref="PagedResult{ProductDto}"/> containing the products for the requested page.
+		/// </returns>
+		/// <response code="200">Returns the paginated list of products in JSON format.</response>
 		[HttpGet]
 		[ProducesResponseType(200)]
 		[Produces("application/json")]
