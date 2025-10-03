@@ -8,7 +8,7 @@ namespace AlzaTestProject.Controllers
 {
 	[ApiController]
 	[ApiVersion("2.0")]
-	[Route("api/v{version:apiVersion}/[controller]")]
+	[Route("api/v{version:apiVersion}/Products")]
 	public class ProductsControllerV2 : ControllerBase
 	{
 		private readonly IProductService _productService;
