@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlzaTestProject.Services.Abstract
+namespace AlzaTestProject.Domain.Abstract
 {
 	public interface IAsyncQueue<TRequest> : IDisposable, IAsyncDisposable
 	{

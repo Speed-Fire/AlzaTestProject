@@ -1,4 +1,4 @@
-﻿using AlzaTestProject.Services.Abstract;
+﻿using AlzaTestProject.Domain.Abstract;
 using AlzaTestProject.Services.Requests;
 using System;
 using System.Collections.Generic;
