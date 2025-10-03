@@ -1,4 +1,7 @@
 
+using AlzaTestProject.DAL.Extensions;
+using Microsoft.EntityFrameworkCore;
+
 namespace AlzaTestProject
 {
     public class Program
@@ -7,9 +10,15 @@ namespace AlzaTestProject
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+			// Add services to the container.
 
-            builder.Services.AddControllers();
+			builder.Services.AddDAL(contextBuilder =>
+			{
+				contextBuilder.UseSqlite(builder.Configuration
+					.GetConnectionString("DefaultConnection"));
+			});
+
+			builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
