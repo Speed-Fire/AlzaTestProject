@@ -22,11 +22,14 @@ namespace AlzaTestProject.Controllers
 		}
 
 		/// <summary>
-		/// Retrieves all products.
+		/// Retrieves the complete list of products.
 		/// </summary>
-		/// <param name="cancellationToken">Cancellation token.</param>
-		/// <returns>A collection of products.</returns>
-		/// <response code="200">Returns the list of products.</response>
+		/// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+		/// <returns>
+		/// A collection of <see cref="ProductDto"/> objects.
+		/// </returns>
+		/// <response code="200">Returns the list of all products.</response>
+
 		[HttpGet]
 		[ProducesResponseType(200)]
 		[Produces("application/json")]
@@ -37,13 +40,16 @@ namespace AlzaTestProject.Controllers
 		}
 
 		/// <summary>
-		/// Retrieves a product by its ID.
+		/// Retrieves a single product by its unique identifier.
 		/// </summary>
-		/// <param name="id">The product ID.</param>
-		/// <param name="cancellationToken">Cancellation token.</param>
-		/// <returns>The requested product.</returns>
+		/// <param name="id">The ID of the product to retrieve.</param>
+		/// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+		/// <returns>
+		/// A <see cref="ProductDto"/> if the product is found; otherwise, a <c>404 Not Found</c>.
+		/// </returns>
 		/// <response code="200">The product was found and returned.</response>
-		/// <response code="404">No product with the given ID was found.</response>
+		/// <response code="404">No product with the given ID exists.</response>
+
 		[HttpGet("{id}")]
 		[ProducesResponseType(typeof(ProductDto), 200)]
 		[ProducesResponseType(404)]
@@ -65,12 +71,16 @@ namespace AlzaTestProject.Controllers
 		/// <summary>
 		/// Creates a new product.
 		/// </summary>
-		/// <param name="createProductDto">The product data to create.</param>
-		/// <param name="cancellationToken">Cancellation token.</param>
-		/// <returns>The newly created product.</returns>
+		/// <param name="createProductDto">The data used to create the product.</param>
+		/// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+		/// <returns>
+		/// The newly created <see cref="ProductDto"/> with its assigned ID.
+		/// </returns>
 		/// <response code="201">The product was successfully created.</response>
-		/// <response code="400">The provided data is invalid.</response>
-		/// <response code="424">An error occurred while creating the product.</response>
+		/// <response code="400">The provided product data is invalid.</response>
+		/// <response code="424">
+		/// A failure occurred while creating the product (e.g., external dependency error).
+		/// </response>
 		[HttpPost]
 		[ProducesResponseType(typeof(ProductDto), 201)]
 		[ProducesResponseType(400)]
@@ -100,14 +110,17 @@ namespace AlzaTestProject.Controllers
 		/// <summary>
 		/// Updates the stock quantity of a product.
 		/// </summary>
-		/// <param name="id">The product ID.</param>
-		/// <param name="stockDto">The updated stock data.</param>
-		/// <param name="cancellationToken">Cancellation token.</param>
-		/// <returns>The updated product.</returns>
-		/// <response code="200">The stock quantity was successfully updated.</response>
-		/// <response code="400">The provided data is invalid.</response>
+		/// <param name="id">The ID of the product to update.</param>
+		/// <param name="stockDto">The new stock information.</param>
+		/// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+		/// <returns>
+		/// The updated <see cref="ProductDto"/> if the operation was successful.
+		/// </returns>
+		/// <response code="200">The stock was successfully updated.</response>
+		/// <response code="400">The provided stock update data is invalid.</response>
 		/// <response code="404">No product with the given ID was found.</response>
-		/// <response code="424">An error occurred while updating the stock quantity.</response>
+		/// <response code="424">An error occurred while updating the stock (e.g., dependency failure).</response>
+
 		[HttpPatch("{id}/stock")]
 		[ProducesResponseType(typeof(ProductDto), 200)]
 		[ProducesResponseType(400)]

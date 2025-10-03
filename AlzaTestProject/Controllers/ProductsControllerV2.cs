@@ -56,13 +56,15 @@ namespace AlzaTestProject.Controllers
 		}
 
 		/// <summary>
-		/// Retrieves a product by its ID.
+		/// Retrieves a single product by its unique identifier.
 		/// </summary>
-		/// <param name="id">The product ID.</param>
-		/// <param name="cancellationToken">Cancellation token.</param>
-		/// <returns>The requested product.</returns>
+		/// <param name="id">The ID of the product to retrieve.</param>
+		/// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+		/// <returns>
+		/// A <see cref="ProductDto"/> if the product is found; otherwise, a <c>404 Not Found</c>.
+		/// </returns>
 		/// <response code="200">The product was found and returned.</response>
-		/// <response code="404">No product with the given ID was found.</response>
+		/// <response code="404">No product with the given ID exists.</response>
 		[HttpGet("{id}")]
 		[ProducesResponseType(typeof(ProductDto), 200)]
 		[ProducesResponseType(404)]
@@ -84,12 +86,16 @@ namespace AlzaTestProject.Controllers
 		/// <summary>
 		/// Creates a new product.
 		/// </summary>
-		/// <param name="createProductDto">The product data to create.</param>
-		/// <param name="cancellationToken">Cancellation token.</param>
-		/// <returns>The newly created product.</returns>
+		/// <param name="createProductDto">The data used to create the product.</param>
+		/// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+		/// <returns>
+		/// The newly created <see cref="ProductDto"/> with its assigned ID.
+		/// </returns>
 		/// <response code="201">The product was successfully created.</response>
-		/// <response code="400">The provided data is invalid.</response>
-		/// <response code="424">An error occurred while creating the product.</response>
+		/// <response code="400">The provided product data is invalid.</response>
+		/// <response code="424">
+		/// A failure occurred while creating the product (e.g., external dependency error).
+		/// </response>
 		[HttpPost]
 		[ProducesResponseType(typeof(ProductDto), 201)]
 		[ProducesResponseType(400)]
