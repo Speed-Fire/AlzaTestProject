@@ -10,6 +10,6 @@ namespace AlzaTestProject.DAL.Specifications
 {
 	internal interface IOrmSpecification<TEntity> : ISpecification
 	{
-		public Expression<Func<TEntity, bool>> Criteria { get; }
+		IQueryable<TEntity> Apply(IQueryable<TEntity> entities);
 	}
 }

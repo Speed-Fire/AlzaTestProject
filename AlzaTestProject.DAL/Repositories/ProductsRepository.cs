@@ -28,8 +28,7 @@ namespace AlzaTestProject.DAL.Repositories
 		{
 			if (specification is IOrmSpecification<ProductEntity> ormSpec)
 			{
-				return await _dbContext.Products
-					.Where(ormSpec.Criteria)
+				return await ormSpec.Apply(_dbContext.Products)
 					.AsNoTracking()
 					.CountAsync(cancellationToken);
 			}
@@ -48,8 +47,7 @@ namespace AlzaTestProject.DAL.Repositories
 		{
 			if (specification is IOrmSpecification<ProductEntity> ormSpec)
 			{
-				var products = await _dbContext.Products
-					.Where(ormSpec.Criteria)
+				var products = await ormSpec.Apply(_dbContext.Products)
 					.AsNoTracking()
 					.ToListAsync(cancellationToken);
 
@@ -73,7 +71,8 @@ namespace AlzaTestProject.DAL.Repositories
 		{
 			if (specification is IOrmSpecification<ProductEntity> ormSpec)
 			{
-				return await _dbContext.Products.AnyAsync(ormSpec.Criteria, cancellationToken);
+				return await ormSpec.Apply(_dbContext.Products)
+					.AnyAsync(cancellationToken);
 			}
 
 			throw new InvalidOperationException("Wrong type of specification.");

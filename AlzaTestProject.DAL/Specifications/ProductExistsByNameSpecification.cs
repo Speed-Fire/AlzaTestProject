@@ -17,7 +17,10 @@ namespace AlzaTestProject.DAL.Specifications
 			_name = name;
 		}
 
-		public Expression<Func<ProductEntity, bool>> Criteria =>
-			producctEntity => producctEntity.Name == _name;
+		public IQueryable<ProductEntity> Apply(IQueryable<ProductEntity> entities)
+		{
+			return entities
+				.Where(e => e.Name == _name);
+		}
 	}
 }

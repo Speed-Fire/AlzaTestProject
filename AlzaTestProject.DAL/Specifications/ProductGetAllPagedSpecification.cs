@@ -19,6 +19,12 @@ namespace AlzaTestProject.DAL.Specifications
 			_pageSize = pageSize;
 		}
 
-		public Expression<Func<ProductEntity, bool>> Criteria => throw new NotImplementedException();
+		public IQueryable<ProductEntity> Apply(IQueryable<ProductEntity> entities)
+		{
+			return entities
+				.Skip((_page - 1) * _pageSize)
+				.Take(_pageSize);
+
+		}
 	}
 }

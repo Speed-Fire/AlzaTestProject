@@ -10,7 +10,7 @@ namespace AlzaTestProject.DAL.Specifications
 {
 	internal class NoFilterSpecification : IOrmSpecification<ProductEntity>
 	{
-		public Expression<Func<ProductEntity, bool>> Criteria =>
-			e => true;
+		public IQueryable<ProductEntity> Apply(IQueryable<ProductEntity> entities)
+			=> entities;
 	}
 }
