@@ -2,6 +2,7 @@
 using AlzaTestProject.Domain.Models;
 using AlzaTestProject.Services.Abstract;
 using AlzaTestProject.Services.Dtos;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -9,7 +10,8 @@ using System.Threading.Tasks;
 namespace AlzaTestProject.Controllers
 {
 	[ApiController]
-	[Route("api/[controller]")]
+	[ApiVersion("1.0")]
+	[Route("api/v{version:apiVersion}/[controller]")]
 	public class ProductsController : ControllerBase
 	{
 		private readonly IProductService _productService;

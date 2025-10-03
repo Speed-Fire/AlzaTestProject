@@ -14,7 +14,13 @@ namespace AlzaTestProject
         {
             var builder = WebApplication.CreateBuilder(args);
 
-			// Add services to the container.
+            // Add services to the container.
+            builder.Services.AddApiVersioning(opts =>
+            {
+                opts.AssumeDefaultVersionWhenUnspecified = true;
+                opts.DefaultApiVersion = new(1, 0);
+                opts.ReportApiVersions = true;
+            });
 
 			builder.Services.AddDAL(contextBuilder =>
 			{
