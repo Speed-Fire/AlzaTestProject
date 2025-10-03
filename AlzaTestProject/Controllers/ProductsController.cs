@@ -89,9 +89,6 @@ namespace AlzaTestProject.Controllers
 		public async Task<IActionResult> Create([FromBody] CreateProductDto createProductDto,
 			CancellationToken cancellationToken)
 		{
-			if (!ModelState.IsValid)
-				return ValidationProblem(ModelState);
-
 			var result = await _productService.CreateAsync(createProductDto, cancellationToken);
 			return result.Match<IActionResult>(
 				product =>
@@ -130,9 +127,6 @@ namespace AlzaTestProject.Controllers
 		public async Task<IActionResult> UpdateStock(int id, [FromBody] UpdateStockDto stockDto,
 			CancellationToken cancellationToken)
 		{
-			if (!ModelState.IsValid)
-				return ValidationProblem(ModelState);
-
 			var result = await _productService.UpdateStockAsync(id, stockDto, cancellationToken);
 			return result.Match<IActionResult>(
 				product =>
