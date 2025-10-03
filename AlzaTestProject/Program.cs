@@ -1,4 +1,5 @@
 
+using AlzaTestProject.DAL.Contextes;
 using AlzaTestProject.DAL.Extensions;
 using AlzaTestProject.Services.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -27,8 +28,15 @@ namespace AlzaTestProject
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            // applying migrations
+			using (var scope = app.Services.CreateScope())
+			{
+				var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+				db.Database.Migrate(); 
+			}
+
+			// Configure the HTTP request pipeline.
+			if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
