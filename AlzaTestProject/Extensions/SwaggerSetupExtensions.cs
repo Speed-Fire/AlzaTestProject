@@ -1,21 +1,36 @@
-﻿using Swashbuckle.AspNetCore.SwaggerGen;
+﻿using Asp.Versioning.ApiExplorer;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
 namespace AlzaTestProject.Extensions
 {
 	public static class SwaggerSetupExtensions
 	{
-		public static IServiceCollection AddSetupedSwaggerGen(this IServiceCollection services)
+		#region AddSwaggerGen
+
+		public static IServiceCollection AddSetupedSwaggerGen(this IServiceCollection services,
+			WebApplicationBuilder builder)
 		{
-			services.AddSwaggerGen(SetupSwagger);
+			services.AddSwaggerGen(opts =>
+			{
+				SetupSwaggerVersioning(opts, builder);
+				SetupSwaggerMethodComments(opts);
+			});
 
 			return services;
 		}
 
-		private static void SetupSwagger(SwaggerGenOptions options)
+		private static void SetupSwaggerVersioning(SwaggerGenOptions options,
+			WebApplicationBuilder builder)
 		{
-			SetupSwaggerInfo(options);
-			SetupSwaggerMethodComments(options);
+			var provider = builder.Services.BuildServiceProvider()
+					 .GetRequiredService<IApiVersionDescriptionProvider>();
+
+			foreach(var description in provider.ApiVersionDescriptions)
+			{
+				SetupSwaggerInfo(description, options);
+			}
 		}
 
 		private static void SetupSwaggerMethodComments(SwaggerGenOptions options)
@@ -25,17 +40,18 @@ namespace AlzaTestProject.Extensions
 			options.IncludeXmlComments(xmlpath);
 		}
 
-		private static void SetupSwaggerInfo(SwaggerGenOptions options)
+		private static void SetupSwaggerInfo(ApiVersionDescription versionDescription, SwaggerGenOptions options)
 		{
-			options.SwaggerDoc("v1", new()
+			options.SwaggerDoc(versionDescription.GroupName, new()
 			{
-				Title = "Alza test API",
+				Title = $"Alza test API {versionDescription.ApiVersion}",
+				Version = versionDescription.ApiVersion.ToString(),
 				Description = "Contains API from alza case study.",
 				TermsOfService = new("https://example.com/terms"),
 				Contact = new()
 				{
 					Name = "Vladislav Sidorovich",
-					Email = "vladsidor6730@gmail.com",
+					Email = "email",
 					Url = new("https://github.com/Speed-Fire/AlzaTestProject")
 				},
 				License = new()
@@ -45,5 +61,24 @@ namespace AlzaTestProject.Extensions
 				}
 			});
 		}
+
+		#endregion
+
+		#region UseSwaggerUI
+
+		public static void UseSetupedSwaggerUI(this WebApplication app)
+		{
+			var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+
+			app.UseSwaggerUI(opts =>
+			{
+				foreach (var description in provider.ApiVersionDescriptions)
+				{
+					opts.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+				}
+			});
+		}
+
+		#endregion
 	}
 }

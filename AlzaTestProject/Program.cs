@@ -15,13 +15,6 @@ namespace AlzaTestProject
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddApiVersioning(opts =>
-            {
-                opts.AssumeDefaultVersionWhenUnspecified = true;
-                opts.DefaultApiVersion = new(1, 0);
-                opts.ReportApiVersions = true;
-            });
-
 			builder.Services.AddDAL(contextBuilder =>
 			{
 				contextBuilder.UseSqlite(GetDbConnectionString(builder));
@@ -31,7 +24,8 @@ namespace AlzaTestProject
 			builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSetupedSwaggerGen();
+            builder.Services.AddSetupedApiVersioning();
+            builder.Services.AddSetupedSwaggerGen(builder);
 
             var app = builder.Build();
 
@@ -46,7 +40,7 @@ namespace AlzaTestProject
 			if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSetupedSwaggerUI();
             }
 
             app.UseMiddleware<ExceptionHandlingMiddleware>();
