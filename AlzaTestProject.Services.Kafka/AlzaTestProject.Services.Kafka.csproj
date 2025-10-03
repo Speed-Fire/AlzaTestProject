@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AlzaTestProject.Services\AlzaTestProject.Services.csproj" />
+    <ProjectReference Include="..\AlzaTestProject.Domain\AlzaTestProject.Domain.csproj" />
   </ItemGroup>
 
 </Project>
