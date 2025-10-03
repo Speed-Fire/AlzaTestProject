@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,6 +22,19 @@ namespace AlzaTestProject.DAL.Repositories
 		public ProductsRepository(AppDbContext dbContext)
 		{
 			_dbContext = dbContext;
+		}
+
+		public async Task<int> Count(ISpecification specification, CancellationToken cancellationToken)
+		{
+			if (specification is IOrmSpecification<ProductEntity> ormSpec)
+			{
+				return await _dbContext.Products
+					.Where(ormSpec.Criteria)
+					.AsNoTracking()
+					.CountAsync(cancellationToken);
+			}
+
+			throw new InvalidOperationException("Wrong type of specification.");
 		}
 
 		public async Task<IEnumerable<Product>> GetAll(CancellationToken cancellationToken = default)
