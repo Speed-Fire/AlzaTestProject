@@ -18,5 +18,10 @@ namespace AlzaTestProject.DAL.Specifications.Factories
 		{
 			return new ProductGetAllPagedSpecification(page, pageSize);
 		}
+
+		public ISpecification NoFilterSpecification()
+		{
+			return new NoFilterSpecification();
+		}
 	}
 }

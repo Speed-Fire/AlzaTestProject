@@ -10,5 +10,6 @@ namespace AlzaTestProject.Domain.Abstract
 	{
 		ISpecification ExistsByNameSpecification(string name);
 		ISpecification GetAllPagedSpecificatyion(int page, int pageSize);
+		ISpecification NoFilterSpecification();
 	}
 }
