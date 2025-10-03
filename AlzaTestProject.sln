@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlzaTestProject.Services", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlzaTestProject.Tests", "AlzaTestProject.Tests\AlzaTestProject.Tests.csproj", "{F93881B6-E7A0-4969-A9DF-BB51D558B14A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlzaTestProject.Services.Kafka", "AlzaTestProject.Services.Kafka\AlzaTestProject.Services.Kafka.csproj", "{17B69948-2AD2-42F6-AAB8-73E808859FC7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{F93881B6-E7A0-4969-A9DF-BB51D558B14A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F93881B6-E7A0-4969-A9DF-BB51D558B14A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F93881B6-E7A0-4969-A9DF-BB51D558B14A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17B69948-2AD2-42F6-AAB8-73E808859FC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17B69948-2AD2-42F6-AAB8-73E808859FC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17B69948-2AD2-42F6-AAB8-73E808859FC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17B69948-2AD2-42F6-AAB8-73E808859FC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
