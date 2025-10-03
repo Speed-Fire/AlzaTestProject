@@ -1,4 +1,6 @@
 ﻿using AlzaTestProject.Services.Abstract;
+using AlzaTestProject.Services.Requests;
+using AlzaTestProject.Services.Workers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -12,7 +14,17 @@ namespace AlzaTestProject.Services.Extensions
 	{
 		public static IServiceCollection AddAlzaTestProjectServices(this IServiceCollection services)
 		{
-			services.AddTransient<IProductService, ProductService>();
+			services
+				.AddTransient<IProductService, ProductService>()
+				.AddSingleton<IAsyncQueue<UpdateStockRequest>, StockUpdateQueueInMemory>();
+
+			return services;
+		}
+
+		public static IServiceCollection AddStockUpdateWorker(this IServiceCollection services)
+		{
+			services
+				.AddHostedService<StockUpdateWorker>();
 
 			return services;
 		}

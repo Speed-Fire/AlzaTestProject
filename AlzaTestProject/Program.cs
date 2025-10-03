@@ -20,6 +20,7 @@ namespace AlzaTestProject
 				contextBuilder.UseSqlite(GetDbConnectionString(builder));
 			});
             builder.Services.AddAlzaTestProjectServices();
+            builder.Services.AddStockUpdateWorker();
 
 			builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -1,6 +1,8 @@
 ﻿using AlzaTestProject.Services.Abstract;
 using AlzaTestProject.Services.Dtos;
+using AlzaTestProject.Services.Extensions;
 using AlzaTestProject.Services.Misc;
+using AlzaTestProject.Services.Requests;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,11 +13,18 @@ namespace AlzaTestProject.Controllers
 	[Route("api/v{version:apiVersion}/Products")]
 	public class ProductsControllerV2 : ControllerBase
 	{
+		private readonly IAsyncQueue<UpdateStockRequest> _queue;
 		private readonly IProductService _productService;
+		private readonly ILogger _logger;
 
-		public ProductsControllerV2(IProductService productService)
+		public ProductsControllerV2(
+			IAsyncQueue<UpdateStockRequest> queue, 
+			IProductService productService,
+			ILogger<ProductsControllerV2> logger)
 		{
+			_queue = queue;
 			_productService = productService;
+			_logger = logger;
 		}
 
 		/// <summary>
@@ -107,16 +116,37 @@ namespace AlzaTestProject.Controllers
 				});
 		}
 
+		/// <summary>
+		/// Enqueues a request to update the stock quantity of a product.
+		/// </summary>
+		/// <param name="id">The ID of the product to update.</param>
+		/// <param name="stockDto">The stock update data (new stock quantity).</param>
+		/// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+		/// <returns>
+		/// Returns <c>202 Accepted</c> when the request has been successfully enqueued for processing.
+		/// </returns>
+		/// <response code="202">
+		/// The stock update request was accepted and queued for asynchronous processing.
+		/// </response>
+		/// <response code="400">
+		/// The provided data is invalid (validation errors).
+		/// </response>
 		[HttpPatch("{id}/stock")]
-		[ProducesResponseType(typeof(ProductDto), 200)]
-		[ProducesResponseType(400)]
-		[ProducesResponseType(404)]
-		[ProducesResponseType(424)]
+		[ProducesResponseType(202)]
 		[Produces("application/json")]
 		public async Task<IActionResult> UpdateStock(int id, [FromBody] UpdateStockDto stockDto,
 			CancellationToken cancellationToken)
 		{
-			throw new NotImplementedException();
+			if (!ModelState.IsValid)
+				return ValidationProblem(ModelState);
+
+			var updateRequest = stockDto.MapToRequest(id);
+			await _queue.EnqueueAsync(updateRequest, cancellationToken);
+
+			_logger.LogInformation("Enqueued stock update for ProductId={ProductId}, NewStock={NewStock}",
+				id, stockDto.NewStock);
+
+			return Accepted();
 		}
 	}
 }

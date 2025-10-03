@@ -1,5 +1,6 @@
 ﻿using AlzaTestProject.Domain.Models;
 using AlzaTestProject.Services.Dtos;
+using AlzaTestProject.Services.Requests;
 
 namespace AlzaTestProject.Services.Extensions
 {
@@ -16,6 +17,11 @@ namespace AlzaTestProject.Services.Extensions
 				ImageUrl = product.ImageUrl.AbsoluteUri,
 				Stock = product.Stock,
 			};
+		}
+
+		public static UpdateStockRequest MapToRequest(this UpdateStockDto dto, int id)
+		{
+			return new(id, dto.NewStock);
 		}
 	}
 }
