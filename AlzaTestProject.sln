@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36414.22 d17.14
+VisualStudioVersion = 17.14.36414.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlzaTestProject", "AlzaTestProject\AlzaTestProject.csproj", "{B348EBF4-851C-4E7B-9B50-536F8232904D}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlzaTestProject.DAL", "AlzaTestProject.DAL\AlzaTestProject.DAL.csproj", "{E103074C-92CB-4998-95CC-8D45563EA08A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlzaTestProject.Services", "AlzaTestProject.Services\AlzaTestProject.Services.csproj", "{CF45CE1A-E0EC-42C0-B6A9-5C7CCA61283E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlzaTestProject.Tests", "AlzaTestProject.Tests\AlzaTestProject.Tests.csproj", "{F93881B6-E7A0-4969-A9DF-BB51D558B14A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{CF45CE1A-E0EC-42C0-B6A9-5C7CCA61283E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF45CE1A-E0EC-42C0-B6A9-5C7CCA61283E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF45CE1A-E0EC-42C0-B6A9-5C7CCA61283E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F93881B6-E7A0-4969-A9DF-BB51D558B14A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F93881B6-E7A0-4969-A9DF-BB51D558B14A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F93881B6-E7A0-4969-A9DF-BB51D558B14A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F93881B6-E7A0-4969-A9DF-BB51D558B14A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
