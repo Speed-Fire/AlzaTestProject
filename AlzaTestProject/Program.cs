@@ -16,8 +16,7 @@ namespace AlzaTestProject
 
 			builder.Services.AddDAL(contextBuilder =>
 			{
-				contextBuilder.UseSqlite(builder.Configuration
-					.GetConnectionString("DefaultConnection"));
+				contextBuilder.UseSqlite(GetDbConnectionString(builder));
 			});
             builder.Services.AddAlzaTestProjectServices();
 
@@ -50,6 +49,27 @@ namespace AlzaTestProject
             app.MapControllers();
 
             app.Run();
+        }
+
+        private static string GetDbConnectionString(WebApplicationBuilder builder)
+        {
+            if (builder.Environment.IsDevelopment())
+            {
+                var constr = "Data Source=";
+                constr += Path.Combine(AppContext.BaseDirectory, "dev.db");
+
+                return constr;
+			}
+            else
+            {
+                var constr = builder.Configuration
+                    .GetConnectionString("DefaultConnection")!;
+
+                if (string.IsNullOrWhiteSpace(constr))
+                    throw new InvalidOperationException("Database connection string for production is not found.");
+
+                return constr;
+			}
         }
     }
 }

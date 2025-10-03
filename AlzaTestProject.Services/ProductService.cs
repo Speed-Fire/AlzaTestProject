@@ -36,7 +36,7 @@ namespace AlzaTestProject.Services
 		public async Task<IEnumerable<ProductDto>> GetAllAsync(CancellationToken cancellationToken = default)
 		{
 			_logger.LogInformation("Fetching all products");
-			var products = await _productsRepository.GetAll();
+			var products = await _productsRepository.GetAll(cancellationToken);
 			_logger.LogInformation("Fetched {Count} products", products.Count());
 			return products.Select(p => p.MapToDto());
 		}
@@ -64,7 +64,9 @@ namespace AlzaTestProject.Services
 
 			try
 			{
-				if (await _productsRepository.Exists(_productSpecificationFactory.ExistsByNameSpecification(createProductDto.Name)))
+				if (await _productsRepository
+					.Exists(_productSpecificationFactory
+						.ExistsByNameSpecification(createProductDto.Name), cancellationToken))
 				{
 					_logger.LogWarning("Product creation failed. Product with name {ProductName} already exists", createProductDto.Name);
 					return new Error<string>("Product with the same name already exists.");
@@ -92,7 +94,7 @@ namespace AlzaTestProject.Services
 
 			try
 			{
-				var product = await _productsRepository.GetById(id);
+				var product = await _productsRepository.GetById(id, cancellationToken);
 				if (product is null)
 				{
 					_logger.LogWarning("Product with id {ProductId} not found", id);
