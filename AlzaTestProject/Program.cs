@@ -1,6 +1,7 @@
 
 using AlzaTestProject.DAL.Contextes;
 using AlzaTestProject.DAL.Extensions;
+using AlzaTestProject.Extensions;
 using AlzaTestProject.Middlewares;
 using AlzaTestProject.Services.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +25,7 @@ namespace AlzaTestProject
 			builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSetupedSwaggerGen();
 
             var app = builder.Build();
 
