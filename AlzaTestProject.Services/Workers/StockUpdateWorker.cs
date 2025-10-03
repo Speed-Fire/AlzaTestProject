@@ -1,6 +1,6 @@
 ﻿using AlzaTestProject.Domain.Abstract;
+using AlzaTestProject.Domain.Requests;
 using AlzaTestProject.Services.Abstract;
-using AlzaTestProject.Services.Requests;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

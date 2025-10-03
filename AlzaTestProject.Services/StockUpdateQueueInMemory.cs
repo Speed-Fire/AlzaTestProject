@@ -1,5 +1,5 @@
 ﻿using AlzaTestProject.Domain.Abstract;
-using AlzaTestProject.Services.Requests;
+using AlzaTestProject.Domain.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;

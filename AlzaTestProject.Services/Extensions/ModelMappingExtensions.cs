@@ -1,6 +1,6 @@
 ﻿using AlzaTestProject.Domain.Models;
+using AlzaTestProject.Domain.Requests;
 using AlzaTestProject.Services.Dtos;
-using AlzaTestProject.Services.Requests;
 
 namespace AlzaTestProject.Services.Extensions
 {

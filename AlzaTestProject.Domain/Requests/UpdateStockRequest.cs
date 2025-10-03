@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlzaTestProject.Services.Requests
+namespace AlzaTestProject.Domain.Requests
 {
 	public record UpdateStockRequest(int ProductId, int NewStock);
 }

@@ -1,9 +1,9 @@
 ﻿using AlzaTestProject.Domain.Abstract;
+using AlzaTestProject.Domain.Requests;
 using AlzaTestProject.Services.Abstract;
 using AlzaTestProject.Services.Dtos;
 using AlzaTestProject.Services.Extensions;
 using AlzaTestProject.Services.Misc;
-using AlzaTestProject.Services.Requests;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
