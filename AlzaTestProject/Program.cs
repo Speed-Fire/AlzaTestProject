@@ -1,6 +1,7 @@
 
 using AlzaTestProject.DAL.Contextes;
 using AlzaTestProject.DAL.Extensions;
+using AlzaTestProject.Middlewares;
 using AlzaTestProject.Services.Extensions;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,7 +42,10 @@ namespace AlzaTestProject
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
+            app.UseRequestLogging();
+
+			app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
