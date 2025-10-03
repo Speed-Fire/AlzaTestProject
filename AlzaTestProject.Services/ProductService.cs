@@ -3,6 +3,7 @@ using AlzaTestProject.Domain.Models;
 using AlzaTestProject.Services.Abstract;
 using AlzaTestProject.Services.Dtos;
 using AlzaTestProject.Services.Extensions;
+using AlzaTestProject.Services.Misc;
 using Microsoft.Extensions.Logging;
 using OneOf;
 using OneOf.Types;
@@ -39,6 +40,34 @@ namespace AlzaTestProject.Services
 			var products = await _productsRepository.GetAll(cancellationToken);
 			_logger.LogInformation("Fetched {Count} products", products.Count());
 			return products.Select(p => p.MapToDto());
+		}
+
+		public async Task<PagedResult<ProductDto>> GetPagedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+		{
+			var totalItems = await _productsRepository.Count(
+				_productSpecificationFactory
+					.NoFilterSpecification(), cancellationToken);
+			var totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+
+			var result = new PagedResult<ProductDto>()
+			{
+				PageNumber = pageNumber,
+				PageSize = pageSize,
+				TotalItems = totalItems,
+				TotalPages = totalPages
+			};
+
+			if (pageNumber > totalPages || pageNumber < 1)
+			{
+				return result;
+			}
+
+			var products = await _productsRepository.GetAll(
+				_productSpecificationFactory
+					.GetAllPagedSpecificatyion(pageNumber, pageSize), cancellationToken);
+
+			result.Items = products.Select(p => p.MapToDto());
+			return result;
 		}
 
 		public async Task<OneOf<ProductDto, NotFound>> GetByIdAsync(int id,

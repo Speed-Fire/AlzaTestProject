@@ -1,5 +1,6 @@
 ﻿using AlzaTestProject.Services.Abstract;
 using AlzaTestProject.Services.Dtos;
+using AlzaTestProject.Services.Misc;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,9 +21,13 @@ namespace AlzaTestProject.Controllers
 		[HttpGet]
 		[ProducesResponseType(200)]
 		[Produces("application/json")]
-		public async Task<ActionResult<IEnumerable<ProductDto>>> GetAll(CancellationToken cancellationToken)
+		public async Task<ActionResult<PagedResult<ProductDto>>> GetAll(
+			CancellationToken cancellationToken,
+			[FromQuery] int pageNum = 1,
+			[FromQuery] int pageSize = 10)
 		{
-			throw new NotImplementedException();
+			var result = await _productService.GetPagedAsync(pageNum, pageSize);
+			return Ok(result);
 		}
 
 		/// <summary>
