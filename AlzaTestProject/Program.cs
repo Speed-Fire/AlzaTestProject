@@ -1,5 +1,6 @@
 
 using AlzaTestProject.DAL.Extensions;
+using AlzaTestProject.Services.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlzaTestProject
@@ -17,6 +18,7 @@ namespace AlzaTestProject
 				contextBuilder.UseSqlite(builder.Configuration
 					.GetConnectionString("DefaultConnection"));
 			});
+            builder.Services.AddAlzaTestProjectServices();
 
 			builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
