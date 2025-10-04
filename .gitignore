@@ -20,6 +20,9 @@ mono_crash.*
 *.db-shm
 *.db-wal
 
+*.[Dd]evelopment.json
+*.[Pp]roduction.json
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
