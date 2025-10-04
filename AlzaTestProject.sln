@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlzaTestProject.Services", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlzaTestProject.Tests", "AlzaTestProject.Tests\AlzaTestProject.Tests.csproj", "{F93881B6-E7A0-4969-A9DF-BB51D558B14A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlzaTestProject.Services.Kafka", "AlzaTestProject.Services.Kafka\AlzaTestProject.Services.Kafka.csproj", "{17B69948-2AD2-42F6-AAB8-73E808859FC7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlzaTestProject.Infrastructure", "AlzaTestProject.Services.Kafka\AlzaTestProject.Infrastructure.csproj", "{17B69948-2AD2-42F6-AAB8-73E808859FC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
