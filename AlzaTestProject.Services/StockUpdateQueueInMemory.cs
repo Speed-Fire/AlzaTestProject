@@ -19,7 +19,7 @@ namespace AlzaTestProject.Services
 			await _channel.Writer.WriteAsync(request, cancellationToken);
 		}
 
-		public async Task<UpdateStockRequest> DequeueAsync(CancellationToken cancellationToken = default)
+		public async Task<UpdateStockRequest?> DequeueAsync(CancellationToken cancellationToken = default)
 		{
 			return await _channel.Reader.ReadAsync(cancellationToken);
 		}
