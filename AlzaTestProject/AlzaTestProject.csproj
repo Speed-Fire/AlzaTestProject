@@ -32,6 +32,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AlzaTestProject.DAL\AlzaTestProject.DAL.csproj" />
     <ProjectReference Include="..\AlzaTestProject.Domain\AlzaTestProject.Domain.csproj" />
+    <ProjectReference Include="..\AlzaTestProject.Infrastructure\AlzaTestProject.Infrastructure.csproj" />
     <ProjectReference Include="..\AlzaTestProject.Services\AlzaTestProject.Services.csproj" />
   </ItemGroup>
 
