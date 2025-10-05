@@ -68,23 +68,13 @@ namespace AlzaTestProject
 
         private static string GetDbConnectionString(WebApplicationBuilder builder)
         {
-            if (builder.Environment.IsDevelopment())
-            {
-                var constr = "Data Source=";
-                constr += Path.Combine(AppContext.BaseDirectory, "dev.db");
+            var constr = builder.Configuration
+                .GetConnectionString("DefaultConnection")!;
 
-                return constr;
-			}
-            else
-            {
-                var constr = builder.Configuration
-                    .GetConnectionString("DefaultConnection")!;
+            if (string.IsNullOrWhiteSpace(constr))
+                throw new InvalidOperationException("Database connection string is not found.");
 
-                if (string.IsNullOrWhiteSpace(constr))
-                    throw new InvalidOperationException("Database connection string for production is not found.");
-
-                return constr;
-			}
+            return constr;
         }
     }
 }
