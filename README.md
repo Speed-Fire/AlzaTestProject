@@ -38,7 +38,7 @@ The connection is configured in the `appsettings.json` file:
 
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": ""
+  "DefaultConnection": "Data Source=c:\\AlzaTestTemp\\dev.db"
 }
 ```
 
@@ -61,16 +61,16 @@ Kafka configuration example:
 ```json
 "Kafka": {
   "General": {
-    "BootstrapServers": "", 
-    "Username": "", 
-    "Password": "", 
-    "SaslMechanism": "", 
-    "SecurityProtocol": ""
+    "BootstrapServers": "localhost:9092", 
+    "Username": "testuser", 
+    "Password": "testpassword", 
+    "SaslMechanism": "Plain", 
+    "SecurityProtocol": "SaslPlaintext"
   },
   "Queues": {
     "UpdateStock": {
-      "Topic": "", 
-      "GroupId": ""
+      "Topic": "AlzaTopic", 
+      "GroupId": "0"
     }
   }
 }
