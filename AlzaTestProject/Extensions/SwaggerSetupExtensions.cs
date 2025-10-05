@@ -87,6 +87,7 @@ namespace AlzaTestProject.Extensions
 
 			app.UseSwaggerUI(opts =>
 			{
+				opts.RoutePrefix = "swagger";
 				foreach (var description in provider.ApiVersionDescriptions)
 				{
 					opts.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
