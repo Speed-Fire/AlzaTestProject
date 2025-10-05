@@ -177,7 +177,7 @@ namespace AlzaTestProject.Tests
 				.Returns(new Mock<ISpecification>().Object);
 
 			_specFactoryMock
-				.Setup(f => f.GetAllPagedSpecificatyion(pageNumber, pageSize))
+				.Setup(f => f.GetAllPagedSpecification(pageNumber, pageSize))
 				.Returns(new Mock<ISpecification>().Object);
 
 			_repoMock

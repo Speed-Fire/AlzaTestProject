@@ -14,7 +14,7 @@ namespace AlzaTestProject.DAL.Specifications.Factories
 			return new ProductExistsByNameSpecification(name);
 		}
 
-		public ISpecification GetAllPagedSpecificatyion(int page, int pageSize)
+		public ISpecification GetAllPagedSpecification(int page, int pageSize)
 		{
 			return new ProductGetAllPagedSpecification(page, pageSize);
 		}

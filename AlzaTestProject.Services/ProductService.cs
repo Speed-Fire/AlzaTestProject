@@ -64,7 +64,7 @@ namespace AlzaTestProject.Services
 
 			var products = await _productsRepository.GetAll(
 				_productSpecificationFactory
-					.GetAllPagedSpecificatyion(pageNumber, pageSize), cancellationToken);
+					.GetAllPagedSpecification(pageNumber, pageSize), cancellationToken);
 
 			result.Items = products.Select(p => p.MapToDto());
 			return result;

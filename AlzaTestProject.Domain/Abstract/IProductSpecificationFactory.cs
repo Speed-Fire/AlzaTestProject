@@ -9,7 +9,7 @@ namespace AlzaTestProject.Domain.Abstract
 	public interface IProductSpecificationFactory
 	{
 		ISpecification ExistsByNameSpecification(string name);
-		ISpecification GetAllPagedSpecificatyion(int page, int pageSize);
+		ISpecification GetAllPagedSpecification(int page, int pageSize);
 		ISpecification NoFilterSpecification();
 	}
 }
