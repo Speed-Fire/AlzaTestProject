@@ -1,11 +1,13 @@
 ﻿using Asp.Versioning.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace AlzaTestProject.Extensions
 {
-	public static class SwaggerSetupExtensions
+	public static partial class SwaggerSetupExtensions
 	{
 		#region AddSwaggerGen
 
@@ -16,9 +18,22 @@ namespace AlzaTestProject.Extensions
 			{
 				SetupSwaggerVersioning(opts, builder);
 				SetupSwaggerMethodComments(opts);
+				SetupControllerNaming(opts);
 			});
 
 			return services;
+		}
+
+		private static void SetupControllerNaming(SwaggerGenOptions opts)
+		{
+			opts.TagActionsBy(api =>
+			{
+				var cad = api.ActionDescriptor as ControllerActionDescriptor;
+				var name = cad?.ControllerTypeInfo.Name.Replace("Controller", "") ?? "Unknown";
+
+				name = VersionDropRegex().Replace(name, "");
+				return [name];
+			});
 		}
 
 		private static void SetupSwaggerVersioning(SwaggerGenOptions options,
@@ -37,7 +52,7 @@ namespace AlzaTestProject.Extensions
 		{
 			var xmlfile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
 			var xmlpath = Path.Combine(AppContext.BaseDirectory, xmlfile);
-			options.IncludeXmlComments(xmlpath);
+			options.IncludeXmlComments(xmlpath, true);
 		}
 
 		private static void SetupSwaggerInfo(ApiVersionDescription versionDescription, SwaggerGenOptions options)
@@ -78,6 +93,9 @@ namespace AlzaTestProject.Extensions
 				}
 			});
 		}
+
+		[GeneratedRegex(@"V\d+$", RegexOptions.IgnoreCase, "ru-RU")]
+		private static partial Regex VersionDropRegex();
 
 		#endregion
 	}
