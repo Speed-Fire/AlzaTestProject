@@ -1,7 +1,9 @@
 
 using AlzaTestProject.DAL.Contextes;
 using AlzaTestProject.DAL.Extensions;
+using AlzaTestProject.Domain.Requests;
 using AlzaTestProject.Extensions;
+using AlzaTestProject.Infrastructure.Extensions;
 using AlzaTestProject.Middlewares;
 using AlzaTestProject.Services.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +15,7 @@ namespace AlzaTestProject
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            
             // Add services to the container.
 			builder.Services.AddDAL(contextBuilder =>
 			{
@@ -21,6 +23,13 @@ namespace AlzaTestProject
 			});
             builder.Services.AddAlzaTestProjectServices();
             builder.Services.AddStockUpdateWorker();
+
+            if (args.Contains("--use-kafka", StringComparer.OrdinalIgnoreCase))
+            {
+				builder.Services.AddKafka(builder.Configuration);
+
+				builder.Services.AddKafkaQueue<UpdateStockRequest>(builder.Configuration, "UpdateStock");
+			}
 
 			builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
