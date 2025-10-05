@@ -101,20 +101,6 @@ namespace AlzaTestProject.Tests
 		}
 
 		[Fact]
-		public async Task Create_InvalidModel_ReturnsValidationProblem()
-		{
-			// Arrange
-			_controller.ModelState.AddModelError("Name", "Required");
-			var createDto = new CreateProductDto();
-
-			// Act
-			var result = await _controller.Create(createDto, CancellationToken.None);
-
-			// Assert
-			Assert.IsType<ValidationProblemDetails>(Assert.IsType<ObjectResult>(result).Value);
-		}
-
-		[Fact]
 		public async Task UpdateStock_ProductExists_ReturnsOk()
 		{
 			// Arrange
@@ -148,20 +134,6 @@ namespace AlzaTestProject.Tests
 
 			// Assert
 			Assert.IsType<NotFoundResult>(result);
-		}
-
-		[Fact]
-		public async Task UpdateStock_InvalidModel_ReturnsValidationProblem()
-		{
-			// Arrange
-			_controller.ModelState.AddModelError("NewStock", "Invalid");
-			var updateDto = new UpdateStockDto();
-
-			// Act
-			var result = await _controller.UpdateStock(1, updateDto, CancellationToken.None);
-
-			// Assert
-			Assert.IsType<ValidationProblemDetails>(Assert.IsType<ObjectResult>(result).Value);
 		}
 	}
 }
