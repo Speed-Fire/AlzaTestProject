@@ -61,18 +61,19 @@ namespace AlzaTestProject.Services.Kafka
 			}
 		}
 
-		public Task<TRequest?> DequeueAsync(CancellationToken cancellationToken = default)
+		public async Task<TRequest?> DequeueAsync(CancellationToken cancellationToken = default)
 		{
 			try
 			{
-				var cr = _consumer.Consume(cancellationToken);
+				var cr = await Task.Run(() => _consumer.Consume(cancellationToken), cancellationToken);
 				if (cr?.Message?.Value == null)
 				{
 					_logger.LogWarning(
 						"Dequeued null/empty message of type {RequestType} from topic {Topic}",
 						typeof(TRequest).Name,
 						_topic);
-					return Task.FromResult<TRequest?>(default);
+
+					return default;
 				}
 
 				var obj = JsonSerializer.Deserialize<TRequest>(cr.Message.Value);
@@ -84,7 +85,7 @@ namespace AlzaTestProject.Services.Kafka
 					cr.Partition.Value,
 					cr.Offset.Value);
 
-				return Task.FromResult<TRequest?>(obj);
+				return obj;
 			}
 			catch (ConsumeException ex)
 			{
@@ -93,7 +94,8 @@ namespace AlzaTestProject.Services.Kafka
 					"Kafka consume error while processing message of type {RequestType} from topic {Topic}",
 					typeof(TRequest).Name,
 					_topic);
-				return Task.FromResult<TRequest?>(default);
+
+				return default;
 			}
 		}
 
