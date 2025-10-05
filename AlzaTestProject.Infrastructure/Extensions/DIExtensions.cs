@@ -30,12 +30,12 @@ namespace AlzaTestProject.Infrastructure.Extensions
 		{
 			services.Configure<KafkaQueueOptions>(queueName,
 				configuration.GetSection($"Kafka:Queues:{queueName}"));
-
+			
 			services.AddSingleton<IAsyncQueue<TRequest>>(provider =>
 			{
 				var logger = provider.GetRequiredService<ILogger<AsyncQueueKafka<TRequest>>>();
 				var kafkaOptions = provider.GetRequiredService<IOptions<KafkaOptions>>();
-				var queueOptions = provider.GetRequiredService<IOptionsSnapshot<KafkaQueueOptions>>()
+				var queueOptions = provider.GetRequiredService<IOptionsMonitor<KafkaQueueOptions>>()
 					.Get(queueName);
 
 				return new AsyncQueueKafka<TRequest>(
