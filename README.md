@@ -85,7 +85,7 @@ Kafka configuration example:
 ## Swagger Documentation
 
 Both API versions include automatically generated **Swagger documentation**.  
-Once the application is running, you can access it at: ``` https://localhost:44334/swagger/ ```
+Once the application is running, you can access it at: ``` https://localhost:<port>/swagger/ ```
 
 ---
 
@@ -99,25 +99,27 @@ You can run the project either from **Visual Studio** or **via the command line*
 2. Make sure you have configured your `appsettings.json`:
    - Set the correct SQLite database path in `"DefaultConnection"`.
    - (Optional) Configure Kafka settings if using Kafka.
-3. Select the AlzaTestProject as startup project and click **Run** (▶).
+3. Select the AlzaTestProject as startup project.
+4. Select launch profile.
+5. Click **Run** (▶).
 
 If you wish to use Kafka:
 
 - Ensure that your **Kafka server** is running.
-- Start the app with the following argument: ``` --use-kafka ```
+- Start the app with the following argument: ``` --use-kafka ``` (Launch profile selection > AlzaTestProject debug properties > (your launch profile) > Commandline arguments)
 
 ### 🔹 From the Command Line
 
 1. Navigate to the **AlzaTestPoject** directory.  
 2. Ensure that your `appsettings.json` is configured properly.  
-3. Run the application using:
+3. Run the application using (Example with 'http'):
 
  ```bash
- dotnet run
+ dotnet run --launch-profile "http"
  ```
  or, to enable Kafka:
  ```bash
- dotnet run --use-kafka
+ dotnet run --launch-profile "http" -- --use-kafka
  ```
 
 ---
