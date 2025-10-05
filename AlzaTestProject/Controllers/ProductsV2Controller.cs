@@ -12,16 +12,16 @@ namespace AlzaTestProject.Controllers
 	[ApiController]
 	[ApiVersion("2.0")]
 	[Route("api/v{version:apiVersion}/Products")]
-	public class ProductsControllerV2 : ControllerBase
+	public class ProductsV2Controller : ControllerBase
 	{
 		private readonly IAsyncQueue<UpdateStockRequest> _queue;
 		private readonly IProductService _productService;
 		private readonly ILogger _logger;
 
-		public ProductsControllerV2(
+		public ProductsV2Controller(
 			IAsyncQueue<UpdateStockRequest> queue, 
 			IProductService productService,
-			ILogger<ProductsControllerV2> logger)
+			ILogger<ProductsV2Controller> logger)
 		{
 			_queue = queue;
 			_productService = productService;

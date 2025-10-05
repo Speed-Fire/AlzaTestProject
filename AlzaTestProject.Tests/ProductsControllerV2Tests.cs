@@ -21,16 +21,16 @@ namespace AlzaTestProject.Tests
 	{
 		private readonly Mock<IProductService> _productServiceMock;
 		private readonly Mock<IAsyncQueue<UpdateStockRequest>> _queueMock;
-		private readonly Mock<ILogger<ProductsControllerV2>> _loggerMock;
-		private readonly ProductsControllerV2 _controller;
+		private readonly Mock<ILogger<ProductsV2Controller>> _loggerMock;
+		private readonly ProductsV2Controller _controller;
 
 		public ProductsControllerV2Tests()
 		{
 			_productServiceMock = new Mock<IProductService>();
 			_queueMock = new Mock<IAsyncQueue<UpdateStockRequest>>();
-			_loggerMock = new Mock<ILogger<ProductsControllerV2>>();
+			_loggerMock = new Mock<ILogger<ProductsV2Controller>>();
 
-			_controller = new ProductsControllerV2(
+			_controller = new ProductsV2Controller(
 				_queueMock.Object,
 				_productServiceMock.Object,
 				_loggerMock.Object);
