@@ -154,5 +154,99 @@ namespace AlzaTestProject.Tests
 			Assert.IsType<ProductDto>(result.AsT0);
 			Assert.Equal(15, result.AsT0.Stock);
 		}
+
+		[Fact]
+		public async Task GetPagedAsync_ReturnsCorrectPagedResult()
+		{
+			// Arrange
+			int pageNumber = 1;
+			int pageSize = 2;
+			var products = new List<Product>
+		{
+			new Product("A", "http://example.com/1") { Id = 1 },
+			new Product("B", "http://example.com/2") { Id = 2 },
+			new Product("C", "http://example.com/32") { Id = 3 }
+		};
+
+			_repoMock
+				.Setup(r => r.Count(It.IsAny<ISpecification>(), It.IsAny<CancellationToken>()))
+				.ReturnsAsync(products.Count);
+
+			_specFactoryMock
+				.Setup(f => f.NoFilterSpecification())
+				.Returns(new Mock<ISpecification>().Object);
+
+			_specFactoryMock
+				.Setup(f => f.GetAllPagedSpecificatyion(pageNumber, pageSize))
+				.Returns(new Mock<ISpecification>().Object);
+
+			_repoMock
+				.Setup(r => r.GetAll(It.IsAny<ISpecification>(), It.IsAny<CancellationToken>()))
+				.ReturnsAsync(products.Take(pageSize).ToList());
+
+			// Act
+			var result = await _service.GetPagedAsync(pageNumber, pageSize);
+
+			// Assert
+			Assert.Equal(pageNumber, result.PageNumber);
+			Assert.Equal(pageSize, result.PageSize);
+			Assert.Equal(products.Count, result.TotalItems);
+			Assert.Equal((int)Math.Ceiling(products.Count / (double)pageSize), result.TotalPages);
+			Assert.Equal(pageSize, result.Items.Count());
+			Assert.Contains(result.Items, p => p.Id == 1);
+			Assert.Contains(result.Items, p => p.Id == 2);
+		}
+
+		[Fact]
+		public async Task GetPagedAsync_PageNumberExceedsTotalPages_ReturnsEmptyItems()
+		{
+			// Arrange
+			int pageNumber = 10;
+			int pageSize = 2;
+
+			_repoMock
+				.Setup(r => r.Count(It.IsAny<ISpecification>(), It.IsAny<CancellationToken>()))
+				.ReturnsAsync(3); // всего 3 элемента, всего 2 страницы
+
+			_specFactoryMock
+				.Setup(f => f.NoFilterSpecification())
+				.Returns(new Mock<ISpecification>().Object);
+
+			// Act
+			var result = await _service.GetPagedAsync(pageNumber, pageSize);
+
+			// Assert
+			Assert.Equal(pageNumber, result.PageNumber);
+			Assert.Equal(pageSize, result.PageSize);
+			Assert.Equal(3, result.TotalItems);
+			Assert.Equal(2, result.TotalPages);
+			Assert.Empty(result.Items);
+		}
+
+		[Fact]
+		public async Task GetPagedAsync_PageNumberLessThanOne_ReturnsEmptyItems()
+		{
+			// Arrange
+			int pageNumber = 0;
+			int pageSize = 2;
+
+			_repoMock
+				.Setup(r => r.Count(It.IsAny<ISpecification>(), It.IsAny<CancellationToken>()))
+				.ReturnsAsync(3);
+
+			_specFactoryMock
+				.Setup(f => f.NoFilterSpecification())
+				.Returns(new Mock<ISpecification>().Object);
+
+			// Act
+			var result = await _service.GetPagedAsync(pageNumber, pageSize);
+
+			// Assert
+			Assert.Equal(pageNumber, result.PageNumber);
+			Assert.Equal(pageSize, result.PageSize);
+			Assert.Equal(3, result.TotalItems);
+			Assert.Equal(2, result.TotalPages);
+			Assert.Empty(result.Items);
+		}
 	}
 }
