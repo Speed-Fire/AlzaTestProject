@@ -18,10 +18,12 @@ namespace AlzaTestProject.Domain.Models
 		public Product(string name, string imageUrl)
 		{
 			if(string.IsNullOrWhiteSpace(name))
-				throw new ArgumentNullException("Name cannot be null or whitespace.");
+				throw new ArgumentNullException(nameof(name));
+			if (!Uri.TryCreate(imageUrl, UriKind.Absolute, out var url))
+				throw new ArgumentException("Given image url is not a vaild url.", nameof(imageUrl));
 
 			Name = name;
-			ImageUrl = new(imageUrl);
+			ImageUrl = url;
 		}
 
 		public Product(int id, string name, string? description, string imageUrl, decimal price, int stock)
