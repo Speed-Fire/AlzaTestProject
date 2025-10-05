@@ -24,7 +24,8 @@ namespace AlzaTestProject
             builder.Services.AddAlzaTestProjectServices();
             builder.Services.AddStockUpdateWorker();
 
-            if (args.Contains("--use-kafka", StringComparer.OrdinalIgnoreCase))
+			// Enables KafkaAsyncQueue if argument "--use-kafka" is specified.
+			if (args.Contains("--use-kafka", StringComparer.OrdinalIgnoreCase))
             {
 				builder.Services.AddKafka(builder.Configuration);
 
