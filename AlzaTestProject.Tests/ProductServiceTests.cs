@@ -123,6 +123,26 @@ namespace AlzaTestProject.Tests
 		}
 
 		[Fact]
+		public async Task CreateAsync_InalidProduct_ReturnsError()
+		{
+			// Arrange
+			var dto = new CreateProductDto { Name = "Prod1", ImageUrl = "not a url" };
+			_specFactoryMock.Setup(f => f.ExistsByNameSpecification(dto.Name))
+							.Returns(Mock.Of<ISpecification>());
+			_repoMock.Setup(r => r.Exists(It.IsAny<ISpecification>(), It.IsAny<CancellationToken>()))
+					 .ReturnsAsync(false);
+			_repoMock.Setup(r => r.Add(It.IsAny<Product>()))
+					 .Returns<Product>(p => { p.Id = 1; return p; });
+			_uowMock.Setup(u => u.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
+
+			// Act
+			var result = await _service.CreateAsync(dto);
+
+			// Assert
+			Assert.IsType<Error<string>>(result.AsT1);
+		}
+
+		[Fact]
 		public async Task UpdateStockAsync_ProductDoesNotExist_ReturnsNotFound()
 		{
 			// Arrange
