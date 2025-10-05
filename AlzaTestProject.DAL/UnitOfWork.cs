@@ -40,12 +40,10 @@ namespace AlzaTestProject.DAL
 			return _dbContext.SaveChangesAsync(cancellationToken);
 		}
 
-		public Task BeginTransaction(CancellationToken cancellationToken = default)
+		public async Task BeginTransaction(CancellationToken cancellationToken = default)
 		{
-			if (_transaction is null)
-				return _dbContext.Database.BeginTransactionAsync(cancellationToken);
-
-			return Task.CompletedTask;
+			_transaction ??= 
+				await _dbContext.Database.BeginTransactionAsync(cancellationToken);
 		}
 
 		public async Task CommitTransaction(CancellationToken cancellationToken = default)
