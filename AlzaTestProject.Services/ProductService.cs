@@ -93,6 +93,8 @@ namespace AlzaTestProject.Services
 
 			try
 			{
+				await _uow.BeginTransaction(cancellationToken);
+
 				if (await _productsRepository
 					.Exists(_productSpecificationFactory
 						.ExistsByNameSpecification(createProductDto.Name), cancellationToken))
@@ -106,13 +108,23 @@ namespace AlzaTestProject.Services
 
 				await _uow.SaveChangesAsync(cancellationToken);
 
+				await _uow.CommitTransaction(cancellationToken);
+
 				_logger.LogInformation("Product {ProductId} created successfully", product.Id);
 				return product.MapToDto();
 			}
 			catch (ArgumentException ex)
 			{
 				_logger.LogError(ex, "Error creating product {ProductName}", createProductDto.Name);
+
+				await _uow.RollbackTransaction(cancellationToken);
+				
 				return new Error<string>(ex.Message);
+			}
+			catch(Exception)
+			{
+				await _uow.RollbackTransaction(cancellationToken);
+				throw;
 			}
 		}
 
@@ -123,6 +135,8 @@ namespace AlzaTestProject.Services
 
 			try
 			{
+				await _uow.BeginTransaction(cancellationToken);
+
 				var product = await _productsRepository.GetById(id, cancellationToken);
 				if (product is null)
 				{
@@ -135,13 +149,23 @@ namespace AlzaTestProject.Services
 
 				await _uow.SaveChangesAsync(cancellationToken);
 
+				await _uow.CommitTransaction(cancellationToken);
+
 				_logger.LogInformation("Stock for product {ProductId} updated successfully to {NewStock}", id, updateStockDto.NewStock);
 				return product.MapToDto();
 			}
 			catch (ArgumentException ex)
 			{
 				_logger.LogError(ex, "Error updating stock for product {ProductId}", id);
+
+				await _uow.RollbackTransaction(cancellationToken);
+
 				return new Error<string>(ex.Message);
+			}
+			catch (Exception)
+			{
+				await _uow.RollbackTransaction(cancellationToken);
+				throw;
 			}
 		}
 	}
