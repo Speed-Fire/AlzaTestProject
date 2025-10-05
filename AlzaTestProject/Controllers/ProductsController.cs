@@ -9,6 +9,14 @@ using System.Threading.Tasks;
 
 namespace AlzaTestProject.Controllers
 {
+	/// <summary>
+	/// API controller responsible for managing products.
+	/// Provides endpoints to retrieve, create, and update product data.
+	/// </summary>
+	/// <remarks>
+	/// This controller uses <see cref="IProductService"/> for business logic operations.
+	/// API version: 1.0.
+	/// </remarks>
 	[ApiController]
 	[ApiVersion("1.0")]
 	[Route("api/v{version:apiVersion}/[controller]")]

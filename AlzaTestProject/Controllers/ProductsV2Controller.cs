@@ -9,9 +9,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AlzaTestProject.Controllers
 {
+	/// <summary>
+	/// API controller (version 2.0) responsible for managing products.
+	/// Provides endpoints to retrieve, create, and update product data.
+	/// </summary>
+	/// <remarks>
+	/// This version introduces pagination and asynchronous stock update requests via queue processing.
+	/// It relies on <see cref="IProductService"/> for product operations and <see cref="IAsyncQueue{T}"/> 
+	/// for background stock updates.
+	/// </remarks>
 	[ApiController]
 	[ApiVersion("2.0")]
-	[Route("api/v{version:apiVersion}/Products")]
+	[Route("api/v{version:apiVersion}/Product")]
 	public class ProductsV2Controller : ControllerBase
 	{
 		private readonly IAsyncQueue<UpdateStockRequest> _queue;
